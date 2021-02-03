@@ -1,0 +1,17 @@
+[package]
+name = "maya_poly_noise"
+version = "0.1.0"
+authors = ["Choi-Jungwoo <jungwoo@cineuse.com>"]
+edition = "2018"
+
+[lib]
+name = "maya_poly_noise"
+crate-type = ["cdylib"]
+
+[dependencies]
+rand="*"
+
+[dependencies.cpython]
+version = "*"
+default-features = false
+features = ["python27-sys"]
