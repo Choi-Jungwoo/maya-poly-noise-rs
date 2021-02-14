@@ -8,14 +8,22 @@ Using Rust In Maya Example
 - C++: 0.04s
 
 ## Require
-- Rust >= 1.49 (nightly)
+- Rust >= 1.49
 - Maya >= 2016
+- Python2.7 include && libs
 - pip
+### MayaPy Install Pip
+- Download: ```https://raw.githubusercontent.com/pypa/get-pip/master/2.7/get-pip.py```
+- Run: ```mayapy get-pip.py```
 
-## Install
+## Install (Use Administrator Mod)
+### Set PYTHON_SYS_EXECUTABLE
+```shell
+$env:PYTHON_SYS_EXECUTABLE="YOUR_MAYA_PATH\bin\mayapy.exe"
+```
 First ```clone``` the code and then ```cd``` it into the code directory.
 ```shell
-mayapy -m pip install -r requirements.txt && mayapy setup.py install
+mayapy -m pip install -r requirements.txt;mayapy setup.py install
 ```
 
 ## Run!!!
