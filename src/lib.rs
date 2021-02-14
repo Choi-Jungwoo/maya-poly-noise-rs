@@ -10,25 +10,22 @@ fn rand_point(max_displacement: f64) -> f64 {
     rand::thread_rng().gen::<f64>() * max_displacement
 }
 
-fn generate_vector_source_data(max_displacement: f64) -> (f64, f64, f64) {
-    (rand_point(max_displacement), rand_point(max_displacement), rand_point(max_displacement))
-}
-
 fn generate_m_point_array(py: Python, om: &PyModule, geo_iter: &PyObject, max_displacement: f64) -> PyResult<PyObject> {
     let point_array = om.call(py, "MPointArray", NoArgs, None)?;
     geo_iter.call_method(py, "allPositions", (&point_array, ), None)?;
 
     let length = point_array.call_method(py, "length", NoArgs, None)?.extract::<usize>(py)?;
     for index in 0..length {
-        let (x, y, z) = generate_vector_source_data(max_displacement);
+        let point = point_array.call_method(py, "__getitem__", (index, ), None)?;
         point_array.call_method(
             py,
             "set",
             (
                 index,
-                x,
-                y,
-                z,
+                rand_point(max_displacement) + point.getattr(py, "x")?.extract::<f64>(py)?,
+                rand_point(max_displacement) + point.getattr(py, "y")?.extract::<f64>(py)?,
+                rand_point(max_displacement) + point.getattr(py, "z")?.extract::<f64>(py)?,
+                point.getattr(py, "w")?.extract::<f64>(py)?,
             ),
             None,
         )?;
